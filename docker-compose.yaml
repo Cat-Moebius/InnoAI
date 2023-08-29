@@ -1,0 +1,25 @@
+# vim: set et ts=2 sw=2
+version: '3.8'
+
+services:
+
+  pet-postgres:
+    image: registry.infra.tatneftm.ru/shared/postgres:12.4-alpine
+    container_name: pet-postgres
+    ports:
+      - "0.0.0.0:5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pet-postgres-data:/var/lib/postgresql/data/
+    networks:
+      - pet-network
+    restart: unless-stopped
+
+networks:
+  pet-network:
+    name: pet-network
+
+volumes:
+  pet-postgres-data:
+    driver: local
